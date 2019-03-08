@@ -2,6 +2,8 @@
 
 namespace SimpleSAML\Module\authwindowslive\Auth\Source;
 
+use Webmozart\Assert\Assert;
+
 /**
  * Authenticate using LiveID.
  *
@@ -38,8 +40,8 @@ class LiveID extends \SimpleSAML\Auth\Source
      */
     public function __construct($info, $config)
     {
-        assert(is_array($info));
-        assert(is_array($config));
+        Assert::isArray($info);
+        Assert::isArray($config);
 
         // Call the parent constructor first, as required by the interface
         parent::__construct($info, $config);
@@ -65,7 +67,7 @@ class LiveID extends \SimpleSAML\Auth\Source
      */
     public function authenticate(&$state)
     {
-        assert(is_array($state));
+        Assert::isArray($state);
 
         // we are going to need the authId in order to retrieve this authentication source later
         $state[self::AUTHID] = $this->authId;
@@ -118,7 +120,7 @@ class LiveID extends \SimpleSAML\Auth\Source
             ],
         ];
 
-        $result = \SimpleSAML\Utils\HTTP::fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', $context);
+        $result = \SimpleSAML\Utils\HTTP::fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', $context, false);
 
         $response = json_decode($result, true);
 
