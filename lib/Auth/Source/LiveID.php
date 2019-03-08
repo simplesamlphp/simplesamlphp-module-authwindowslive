@@ -120,6 +120,7 @@ class LiveID extends \SimpleSAML\Auth\Source
             ],
         ];
 
+        /** @var string $result */
         $result = \SimpleSAML\Utils\HTTP::fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', $context, false);
 
         $response = json_decode($result, true);
@@ -141,6 +142,8 @@ class LiveID extends \SimpleSAML\Auth\Source
             'http' => ['header' => "Accept: application/json\r\nAuthorization: Bearer ".
                 $response['access_token']."\r\n"]
         ];
+
+        /** @var string $data */
         $data = \SimpleSAML\Utils\HTTP::fetch('https://graph.microsoft.com/v1.0/me', $opts);
         $userdata = json_decode($data, true);
 
