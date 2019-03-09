@@ -33,12 +33,12 @@
     },
     "require": {
         "php": ">=5.5",
-        "simplesamlphp/composer-module-installer": "~1.0",
+        "simplesamlphp/composer-module-installer": "~1.1",
         "webmozart/assert": "^1.4"
     },
     "require-dev": {
         "simplesamlphp/simplesamlphp": "^1.17",
-        "phpunit/phpunit": "~4.8.35"
+        "phpunit/phpunit": "~4.8.36"
     },
     "support": {
         "issues": "https://github.com/tvdijen/simplesamlphp-module-authwindowslive/issues",
