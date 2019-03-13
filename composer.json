@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SimpleSAML\\modules\\authwindowslive\\": "lib/"
+            "SimpleSAML\\Module\\authwindowslive\\": "lib/"
         }
     },
     "autoload-dev": {
