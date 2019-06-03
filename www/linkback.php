@@ -37,7 +37,7 @@ if (array_key_exists('code', $_REQUEST)) {
     throw new \Exception('Authentication failed: ['.$_REQUEST['error'].'] '.$_REQUEST['error_description']);
 }
 
-Assert::keyExists($state, \SimpleSAML\Module\authwindowslive\Auth\Source\LiveID::AUTHID, $state);
+Assert::keyExists($state, \SimpleSAML\Module\authwindowslive\Auth\Source\LiveID::AUTHID);
 
 // find authentication source
 $sourceId = $state[\SimpleSAML\Module\authwindowslive\Auth\Source\LiveID::AUTHID];
