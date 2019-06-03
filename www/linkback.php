@@ -1,7 +1,5 @@
 <?php
 
-use Webmozart\Assert\Assert;
-
 /**
  * Handle linkback() response from Windows Live ID.
  */
@@ -37,7 +35,7 @@ if (array_key_exists('code', $_REQUEST)) {
     throw new \Exception('Authentication failed: ['.$_REQUEST['error'].'] '.$_REQUEST['error_description']);
 }
 
-Assert::keyExists($state, \SimpleSAML\Module\authwindowslive\Auth\Source\LiveID::AUTHID, $state);
+assert(array_key_exists(\SimpleSAML\Module\authwindowslive\Auth\Source\LiveID::AUTHID, $state));
 
 // find authentication source
 $sourceId = $state[\SimpleSAML\Module\authwindowslive\Auth\Source\LiveID::AUTHID];
