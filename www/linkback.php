@@ -1,18 +1,19 @@
 <?php
 
-use Webmozart\Assert\Assert;
-
 /**
  * Handle linkback() response from Windows Live ID.
  */
 
+use Exception;
+use SimpleSAML\Auth;
+use SimpleSAML\Error;
+use SimpleSAML\Module\authwindowslive\Auth\Source\LiveID;
+use Webmozart\Assert\Assert;
+
 if (!array_key_exists('state', $_REQUEST)) {
-    throw new \Exception('Lost OAuth Client State');
+    throw new Exception('Lost OAuth Client State');
 }
-$state = \SimpleSAML\Auth\State::loadState(
-    $_REQUEST['state'],
-    \SimpleSAML\Module\authwindowslive\Auth\Source\LiveID::STAGE_INIT
-);
+$state = Auth\State::loadState($_REQUEST['state'], LiveID::STAGE_INIT);
 
 // http://msdn.microsoft.com/en-us/library/ff749771.aspx
 if (array_key_exists('code', $_REQUEST)) {
@@ -23,31 +24,33 @@ if (array_key_exists('code', $_REQUEST)) {
         $state['authwindowslive:exp'] = $_REQUEST['exp'];
     }
 } else {
-    // In the OAuth WRAP service, error_reason = 'user_denied' means user chose
-    // not to login with LiveID. It isn't clear that this is still true in the
-    // newer API, but the parameter name has changed to error. It doesn't hurt
-    // to preserve support for this, so this is left in as a placeholder.
-    // redirect them to their original page so they can choose another auth mechanism
+    /**
+     * In the OAuth WRAP service, error_reason = 'user_denied' means user chose
+     * not to login with LiveID. It isn't clear that this is still true in the
+     * newer API, but the parameter name has changed to error. It doesn't hurt
+     * to preserve support for this, so this is left in as a placeholder.
+     * redirect them to their original page so they can choose another auth mechanism
+     */
     if (($_REQUEST['error'] === 'user_denied') && ($state !== null)) {
-        $e = new \SimpleSAML\Error\UserAborted();
-        \SimpleSAML\Auth\State::throwException($state, $e);
+        $e = new Error\UserAborted();
+        Auth\State::throwException($state, $e);
     }
 
     // error
-    throw new \Exception('Authentication failed: ['.$_REQUEST['error'].'] '.$_REQUEST['error_description']);
+    throw new Exception('Authentication failed: [' . $_REQUEST['error'] . '] ' . $_REQUEST['error_description']);
 }
 
-Assert::keyExists($state, \SimpleSAML\Module\authwindowslive\Auth\Source\LiveID::AUTHID);
+Assert::keyExists($state, LiveID::AUTHID);
 
 // find authentication source
-$sourceId = $state[\SimpleSAML\Module\authwindowslive\Auth\Source\LiveID::AUTHID];
+$sourceId = $state[LiveID::AUTHID];
 
 /** @var \SimpleSAML\Module\authwindowslive\Auth\Source\LiveID|null $source */
-$source = \SimpleSAML\Auth\Source::getById($sourceId);
+$source = Auth\Source::getById($sourceId);
 if ($source === null) {
-    throw new \Exception('Could not find authentication source with id '.$sourceId);
+    throw new Exception('Could not find authentication source with id ' . $sourceId);
 }
 
 $source->finalStep($state);
 
-\SimpleSAML\Auth\Source::completeAuth($state);
+Auth\Source::completeAuth($state);
