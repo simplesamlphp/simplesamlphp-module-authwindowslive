@@ -12,8 +12,6 @@ use Webmozart\Assert\Assert;
 /**
  * Authenticate using LiveID.
  *
- * @author Brook Schofield, TERENA.
- * @author Guy Halse, TENET.
  * @package SimpleSAMLphp
  */
 class LiveID extends \SimpleSAML\Auth\Source
