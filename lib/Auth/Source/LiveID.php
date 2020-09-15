@@ -64,7 +64,6 @@ class LiveID extends \SimpleSAML\Auth\Source
      * Log-in using LiveID platform
      *
      * @param array &$state  Information about the current authentication.
-     * @return void
      */
     public function authenticate(array &$state): void
     {
@@ -92,7 +91,6 @@ class LiveID extends \SimpleSAML\Auth\Source
 
     /**
      * @param array &$state
-     * @return void
      * @throws \Exception
      */
     public function finalStep(array &$state): void
