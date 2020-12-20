@@ -157,7 +157,7 @@ class LiveID extends \SimpleSAML\Auth\Source
         ];
         foreach ($userdata as $key => $value) {
             if (is_string($value)) {
-                $attributes['windowslive.' . $key] = [(string) $value];
+                $attributes['windowslive.' . $key] = [$value];
             }
         }
 
