@@ -3,11 +3,11 @@
 namespace SimpleSAML\Module\authwindowslive\Auth\Source;
 
 use Exception;
+use SimpleSAML\Assert\Assert;
 use SimpleSAML\Auth;
 use SimpleSAML\Logger;
 use SimpleSAML\Module;
 use SimpleSAML\Utils;
-use Webmozart\Assert\Assert;
 
 /**
  * Authenticate using LiveID.
