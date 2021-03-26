@@ -86,7 +86,8 @@ class LiveID extends \SimpleSAML\Auth\Source
             '&scope=' . urlencode('openid https://graph.microsoft.com/user.read')
         ;
 
-        Utils\HTTP::redirectTrustedURL($authorizeURL);
+        $httpUtils = new Utils\HTTP();
+        $httpUtils->redirectTrustedURL($authorizeURL);
     }
 
     /**
@@ -117,8 +118,9 @@ class LiveID extends \SimpleSAML\Auth\Source
             ],
         ];
 
+        $httpUtils = new Utils\HTTP();
         /** @var string $result */
-        $result = Utils\HTTP::fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', $context, false);
+        $result = $httpUtils->fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', $context, false);
 
         $response = json_decode($result, true);
 
@@ -141,7 +143,7 @@ class LiveID extends \SimpleSAML\Auth\Source
         ];
 
         /** @var string $data */
-        $data = Utils\HTTP::fetch('https://graph.microsoft.com/v1.0/me', $opts);
+        $data = $httpUtils->fetch('https://graph.microsoft.com/v1.0/me', $opts);
         $userdata = json_decode($data, true);
 
         // this is the simplest case
