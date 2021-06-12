@@ -27,10 +27,10 @@ class LiveID extends \SimpleSAML\Auth\Source
     public const AUTHID = 'authwindowslive:AuthId';
 
     /** @var string */
-    private $key;
+    private string $key;
 
     /** @var string */
-    private $secret;
+    private string $secret;
 
 
     /**
